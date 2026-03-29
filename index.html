@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Collin's Workout Plan — 140 → 170 lbs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Collin's Gym Companion — 140 → 170 lbs</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
   :root {
     --bg: #0a0a0a;
     --card: #141414;
@@ -29,1101 +28,1231 @@
     --yellow: #facc15;
     --yellow-dim: rgba(250,204,21,0.12);
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  * { margin:0; padding:0; box-sizing:border-box; }
   body {
     font-family: 'Inter', -apple-system, sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
     overflow-x: hidden;
+    padding-bottom: 80px;
   }
 
-  /* HERO */
-  .hero {
-    position: relative;
-    padding: 60px 24px 40px;
-    text-align: center;
-    background: linear-gradient(180deg, #0f1a0f 0%, var(--bg) 100%);
+  /* TOP NAV */
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
-  }
-  .hero-badge {
-    display: inline-block;
-    background: var(--accent-dim);
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 100px;
-    border: 1px solid rgba(74,222,128,0.2);
-    margin-bottom: 20px;
-  }
-  .hero h1 {
-    font-size: clamp(32px, 6vw, 52px);
-    font-weight: 900;
-    letter-spacing: -1.5px;
-    line-height: 1.1;
-    margin-bottom: 12px;
-  }
-  .hero h1 span { color: var(--accent); }
-  .hero p {
-    color: var(--text-dim);
-    font-size: 16px;
-    max-width: 500px;
-    margin: 0 auto;
-  }
-
-  /* STATS BAR */
-  .stats-bar {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    padding: 24px;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  .stat-chip {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 20px;
-    text-align: center;
-    min-width: 120px;
-  }
-  .stat-chip .num {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--accent);
-  }
-  .stat-chip .label {
-    font-size: 11px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 2px;
-  }
-
-  /* NAV TABS */
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 16px;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .nav::-webkit-scrollbar { display: none; }
+  .top-nav::-webkit-scrollbar { display:none; }
   .nav-inner {
     display: flex;
-    gap: 4px;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 8px 0;
+    min-width: max-content;
+    padding: 0 8px;
   }
   .nav-btn {
-    background: none;
-    border: none;
+    flex-shrink: 0;
+    padding: 14px 14px;
+    background: none; border: none;
     color: var(--text-dim);
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 10px 16px;
-    border-radius: 10px;
+    font: 600 12px/1 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     cursor: pointer;
-    white-space: nowrap;
+    border-bottom: 2px solid transparent;
     transition: all 0.2s;
+    white-space: nowrap;
   }
-  .nav-btn:hover { background: var(--card); color: var(--text); }
-  .nav-btn.active { background: var(--accent-dim); color: var(--accent); }
-  .nav-btn .icon { margin-right: 6px; }
-
-  /* MAIN */
-  .main { max-width: 900px; margin: 0 auto; padding: 24px 16px 80px; }
+  .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .nav-btn:hover { color: var(--text); }
 
   /* SECTIONS */
-  .section { display: none; animation: fadeIn 0.3s ease; }
-  .section.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .section { display:none; padding: 20px 16px; max-width: 600px; margin: 0 auto; }
+  .section.active { display:block; }
 
-  /* SECTION HEADERS */
-  .section-header { margin-bottom: 24px; }
-  .section-header h2 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
-  .section-header p { color: var(--text-dim); font-size: 14px; }
+  /* HERO MINI */
+  .hero-mini {
+    text-align: center;
+    padding: 24px 16px 16px;
+    max-width: 600px; margin: 0 auto;
+  }
+  .hero-mini h1 { font-size: 22px; font-weight: 800; }
+  .hero-mini h1 span { color: var(--accent); }
+  .hero-mini .subtitle { color: var(--text-dim); font-size: 13px; margin-top: 4px; }
 
   /* CARDS */
   .card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 16px;
-    transition: border-color 0.2s;
-  }
-  .card:hover { border-color: #333; }
-  .card-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .card-title .dot {
-    width: 10px; height: 10px; border-radius: 50%; display: inline-block;
-  }
-
-  /* DAY CARDS */
-  .day-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    margin-bottom: 12px;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-  .day-card:hover { border-color: #333; }
-  .day-header {
-    padding: 20px 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    user-select: none;
-  }
-  .day-header:hover { background: var(--card-hover); }
-  .day-header-left { display: flex; align-items: center; gap: 14px; }
-  .day-num {
-    width: 40px; height: 40px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 16px;
-  }
-  .day-info h3 { font-size: 16px; font-weight: 700; }
-  .day-info span { font-size: 13px; color: var(--text-dim); }
-  .day-chevron { font-size: 18px; color: var(--text-dim); transition: transform 0.3s; }
-  .day-card.open .day-chevron { transform: rotate(180deg); }
-  .day-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
-  .day-card.open .day-body { max-height: 5000px; }
-  .day-content { padding: 0 24px 24px; }
-
-  /* TABLES */
-  .exercise-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
-  .exercise-table th {
-    text-align: left; color: var(--text-dim); font-size: 11px;
-    text-transform: uppercase; letter-spacing: 1px; padding: 8px 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  .exercise-table td {
-    padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top;
-  }
-  .exercise-table tr:last-child td { border-bottom: none; }
-  .exercise-name { font-weight: 600; }
-  .exercise-note { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
-
-  /* WHY BOXES */
-  .why-box {
-    background: rgba(74,222,128,0.06);
-    border: 1px solid rgba(74,222,128,0.12);
     border-radius: 12px;
-    padding: 14px 18px;
-    margin-top: 6px;
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--text-dim);
+    padding: 16px;
+    margin-bottom: 12px;
   }
-  .why-box strong { color: var(--accent); font-weight: 600; }
-  .why-box.blue { background: rgba(96,165,250,0.06); border-color: rgba(96,165,250,0.12); }
-  .why-box.blue strong { color: var(--blue); }
-  .why-box.orange { background: rgba(251,146,60,0.06); border-color: rgba(251,146,60,0.12); }
-  .why-box.orange strong { color: var(--orange); }
-  .why-box.cyan { background: rgba(34,211,238,0.06); border-color: rgba(34,211,238,0.12); }
-  .why-box.cyan strong { color: var(--cyan); }
-  .why-box.purple { background: rgba(192,132,252,0.06); border-color: rgba(192,132,252,0.12); }
-  .why-box.purple strong { color: var(--purple); }
-
-  /* BODY NOTE - special callout for long femur */
-  .body-note {
-    background: linear-gradient(135deg, rgba(251,146,60,0.1) 0%, rgba(250,204,21,0.06) 100%);
-    border: 1px solid rgba(251,146,60,0.25);
-    border-radius: 14px;
-    padding: 20px 24px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    line-height: 1.7;
-  }
-  .body-note h4 { color: var(--orange); font-size: 15px; margin-bottom: 8px; }
-  .body-note ul { list-style: none; margin-top: 10px; }
-  .body-note li { padding: 5px 0; display: flex; align-items: flex-start; gap: 8px; }
-  .body-note li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 8px; }
-
-  /* TAG PILLS */
-  .tag {
-    display: inline-block; font-size: 11px; font-weight: 600;
-    padding: 3px 10px; border-radius: 100px; letter-spacing: 0.3px;
-  }
-  .tag-push { background: var(--red-dim); color: var(--red); }
-  .tag-pull { background: var(--blue-dim); color: var(--blue); }
-  .tag-legs { background: var(--accent-dim); color: var(--accent); }
-  .tag-upper { background: var(--purple-dim); color: var(--purple); }
-  .tag-swim { background: var(--cyan-dim); color: var(--cyan); }
-  .tag-bike { background: var(--orange-dim); color: var(--orange); }
-  .tag-rest { background: var(--yellow-dim); color: var(--yellow); }
-
-  /* SWIM/BIKE BLOCKS */
-  .cardio-block { border-radius: 12px; padding: 16px 20px; margin-top: 16px; }
-  .cardio-block.swim { background: var(--cyan-dim); border: 1px solid rgba(34,211,238,0.15); }
-  .cardio-block.bike { background: var(--orange-dim); border: 1px solid rgba(251,146,60,0.15); }
-  .cardio-block h4 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
-  .cardio-block.swim h4 { color: var(--cyan); }
-  .cardio-block.bike h4 { color: var(--orange); }
-  .cardio-item {
-    display: flex; justify-content: space-between; padding: 6px 0;
-    font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-  .cardio-item:last-child { border-bottom: none; }
-  .cardio-item span:first-child { color: var(--text-dim); }
-
-  /* MEAL PLAN */
-  .meal-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 24px; margin-bottom: 12px;
-  }
-  .meal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-  .meal-header h3 { font-size: 16px; font-weight: 700; }
-  .meal-cals {
-    background: var(--accent-dim); color: var(--accent);
-    font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 100px;
-  }
-  .meal-time { font-size: 12px; color: var(--text-dim); margin-bottom: 12px; }
-  .meal-items { list-style: none; }
-  .meal-items li {
-    padding: 6px 0; font-size: 14px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+  .card-title {
+    font-size: 14px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
     display: flex; align-items: center; gap: 8px;
   }
-  .meal-items li:last-child { border-bottom: none; }
-  .meal-items li::before {
-    content: ''; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--accent); flex-shrink: 0;
+  .card-title .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block;
   }
-  .macro-row { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
-  .macro-pill {
-    font-size: 12px; font-weight: 600; padding: 4px 12px;
-    border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text-dim);
-  }
-  .macro-pill span { color: var(--text); }
 
   /* TODAY */
-  .today-banner {
-    background: linear-gradient(135deg, rgba(74,222,128,0.12) 0%, rgba(34,211,238,0.08) 100%);
-    border: 1px solid rgba(74,222,128,0.2);
-    border-radius: 16px; padding: 24px; margin-bottom: 24px; text-align: center;
+  .today-header {
+    background: linear-gradient(135deg, #0f1a0f, #0a1a1a);
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+    text-align: center;
   }
-  .today-banner h2 { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
-  .today-banner h2 span { color: var(--accent); }
-  .today-banner p { color: var(--text-dim); font-size: 14px; }
+  .today-header .day-name { font-size: 20px; font-weight: 800; color: var(--accent); }
+  .today-header .day-focus { color: var(--text-dim); font-size: 13px; margin-top: 2px; }
+  .today-header .day-date { color: var(--text-dim); font-size: 11px; margin-top: 6px; opacity: 0.6; }
 
-  /* CHECKLIST */
-  .checklist { list-style: none; margin-top: 12px; }
-  .checklist li {
-    padding: 12px 16px; background: rgba(255,255,255,0.02);
-    border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px;
-    display: flex; align-items: center; gap: 12px; cursor: pointer;
-    transition: all 0.2s; font-size: 14px;
+  .exercise-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
   }
-  .checklist li:hover { background: rgba(255,255,255,0.04); }
-  .checklist li.checked { opacity: 0.5; text-decoration: line-through; }
-  .check-box {
-    width: 22px; height: 22px; border-radius: 6px; border: 2px solid #444;
+  .exercise-header {
+    padding: 14px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+  }
+  .exercise-name { font-weight: 700; font-size: 14px; }
+  .exercise-rx { color: var(--text-dim); font-size: 12px; }
+  .exercise-sets {
+    display: none;
+    padding: 0 16px 14px;
+  }
+  .exercise-card.open .exercise-sets { display:block; }
+  .set-row {
+    display: grid;
+    grid-template-columns: 40px 1fr 1fr 50px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .set-label {
+    font-size: 12px; font-weight: 700; color: var(--text-dim);
+    text-align: center;
+  }
+  .set-input {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    color: var(--text);
+    font: 600 14px 'Inter', sans-serif;
+    text-align: center;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+  .set-input:focus { border-color: var(--accent); outline: none; }
+  .set-input::placeholder { color: #444; }
+  .set-check {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: var(--bg);
+    color: var(--text-dim);
+    font-size: 16px;
+    cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; transition: all 0.2s; font-size: 13px;
+    transition: all 0.2s;
   }
-  .checklist li.checked .check-box { background: var(--accent); border-color: var(--accent); color: #000; }
+  .set-check.done {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 
-  /* COACH NOTE */
-  .coach-note {
-    background: linear-gradient(135deg, rgba(251,146,60,0.1) 0%, rgba(248,113,113,0.06) 100%);
-    border: 1px solid rgba(251,146,60,0.2);
-    border-radius: 16px; padding: 24px; margin-top: 24px;
-    font-size: 15px; line-height: 1.7;
+  /* SAVE BUTTON */
+  .save-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--accent), #22c55e);
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    font: 800 16px 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: transform 0.1s;
   }
-  .coach-note strong { color: var(--orange); }
+  .save-btn:active { transform: scale(0.98); }
+
+  /* WEIGHT TRACKER */
+  .weight-input-row {
+    display: flex; gap: 8px; margin-bottom: 16px;
+  }
+  .weight-input-row input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    color: var(--text);
+    font: 700 18px 'Inter', sans-serif;
+    text-align: center;
+  }
+  .weight-input-row input:focus { border-color: var(--accent); outline: none; }
+  .weight-input-row button {
+    padding: 14px 24px;
+    background: var(--accent);
+    color: #000;
+    border: none; border-radius: 10px;
+    font: 700 14px 'Inter', sans-serif;
+    cursor: pointer;
+  }
+  .weight-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .weight-stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .weight-stat .val { font-size: 22px; font-weight: 800; }
+  .weight-stat .label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; margin-top: 2px; }
+  .progress-bar-outer {
+    background: var(--bg);
+    border-radius: 10px;
+    height: 24px;
+    overflow: hidden;
+    margin-top: 10px;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #22c55e);
+    border-radius: 10px;
+    transition: width 0.6s;
+  }
+  .progress-bar-text {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font: 700 11px 'Inter', sans-serif;
+    color: var(--text);
+  }
+  #weightChart { width: 100%; height: 200px; margin-top: 12px; }
+  .weight-log-list { margin-top: 12px; }
+  .weight-log-item {
+    display: flex; justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .weight-log-item .date { color: var(--text-dim); }
+
+  /* PRs */
+  .pr-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .pr-card .pr-name { font-weight: 700; font-size: 14px; }
+  .pr-card .pr-details { color: var(--text-dim); font-size: 12px; margin-top: 2px; }
+  .pr-card .pr-val {
+    font-size: 22px; font-weight: 800; color: var(--accent);
+    white-space: nowrap;
+  }
+  .pr-badge {
+    display: inline-block;
+    background: var(--yellow-dim);
+    color: var(--yellow);
+    font: 700 9px 'Inter', sans-serif;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    text-transform: uppercase;
+  }
+
+  /* COACH */
+  .coach-area {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 200px;
+  }
+  .coach-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font: 800 15px 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+  .coach-msg {
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+  .coach-msg strong { color: var(--accent); }
+
+  /* SPLIT */
+  .split-day {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .split-day-header {
+    padding: 14px 16px;
+    font-weight: 700;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+  }
+  .split-day-header .arrow { color: var(--text-dim); transition: transform 0.2s; }
+  .split-day.open .split-day-header .arrow { transform: rotate(180deg); }
+  .split-day-body {
+    display: none;
+    padding: 0 16px 14px;
+  }
+  .split-day.open .split-day-body { display:block; }
+  .split-exercise {
+    display: flex; justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .split-exercise:last-child { border-bottom: none; }
+  .split-exercise .rx { color: var(--text-dim); }
+
+  /* MEALS */
+  .meal-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+  .meal-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .meal-card .meal-items { font-size: 13px; color: var(--text-dim); line-height: 1.8; }
+  .meal-card .meal-macros {
+    display: inline-block;
+    background: var(--accent-dim);
+    color: var(--accent);
+    font: 700 11px 'Inter', sans-serif;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+  }
+  .macro-total {
+    background: linear-gradient(135deg, #0f1a0f, #0a1a1a);
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .macro-total h2 { font-size: 28px; font-weight: 900; color: var(--accent); }
+  .macro-total .sub { color: var(--text-dim); font-size: 12px; }
 
   /* GROCERY */
-  .grocery-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 8px; margin-top: 12px;
+  .grocery-cat { margin-bottom: 16px; }
+  .grocery-cat h3 {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
   }
   .grocery-item {
-    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-    border-radius: 10px; padding: 10px 14px; font-size: 14px;
-    display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
   }
-  .grocery-item:hover { background: rgba(255,255,255,0.06); }
-  .grocery-item.bought { opacity: 0.4; text-decoration: line-through; }
   .grocery-check {
-    width: 18px; height: 18px; border-radius: 5px; border: 2px solid #444;
-    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    font-size: 11px; transition: all 0.2s;
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    background: var(--bg);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: transparent;
+    font-size: 12px;
+    transition: all 0.15s;
+    flex-shrink: 0;
   }
-  .grocery-item.bought .grocery-check { background: var(--accent); border-color: var(--accent); color: #000; }
+  .grocery-check.checked {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .grocery-item.checked-item span { text-decoration: line-through; color: var(--text-dim); }
 
-  /* GROCERY COST */
-  .cost-summary {
-    background: linear-gradient(135deg, rgba(74,222,128,0.1) 0%, rgba(96,165,250,0.06) 100%);
-    border: 1px solid rgba(74,222,128,0.2);
-    border-radius: 16px; padding: 24px; margin-bottom: 24px; text-align: center;
-  }
-  .cost-summary h2 { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
-  .cost-summary h2 span { color: var(--accent); }
-  .cost-summary .cost-subtitle { color: var(--text-dim); font-size: 14px; margin-bottom: 20px; }
-  .cost-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 10px; text-align: left; margin-top: 16px;
-  }
-  .cost-cat {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 14px 16px;
-  }
-  .cost-cat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
-  .cost-cat-amount { font-size: 20px; font-weight: 800; }
-  .cost-cat-amount.green { color: var(--accent); }
-  .cost-cat-amount.orange { color: var(--orange); }
-  .cost-cat-amount.blue { color: var(--blue); }
-  .cost-cat-amount.yellow { color: var(--yellow); }
-  .cost-cat-amount.purple { color: var(--purple); }
-  .grocery-price {
-    margin-left: auto; font-size: 13px; font-weight: 700; color: var(--accent); white-space: nowrap;
-  }
-  .cost-note {
-    background: rgba(96,165,250,0.06); border: 1px solid rgba(96,165,250,0.12);
-    border-radius: 12px; padding: 14px 18px; margin-top: 20px;
-    font-size: 13px; line-height: 1.6; color: var(--text-dim); text-align: left;
-  }
-  .cost-note strong { color: var(--blue); }
-  .cost-updated { font-size: 11px; color: var(--text-dim); margin-top: 12px; opacity: 0.6; }
+  /* BODY ANALYSIS */
+  .body-stat { margin-bottom: 16px; }
+  .body-stat .label { font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px; }
+  .body-stat .row { display: flex; justify-content: space-between; align-items: baseline; }
+  .body-stat .current { font-size: 20px; font-weight: 800; }
+  .body-stat .target { font-size: 13px; color: var(--text-dim); }
 
   /* RULES */
-  .rule { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
-  .rule:last-child { border-bottom: none; }
+  .rule-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
   .rule-num {
-    width: 32px; height: 32px; border-radius: 10px;
-    background: var(--accent-dim); color: var(--accent);
-    font-size: 14px; font-weight: 800;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    background: var(--accent-dim);
+    color: var(--accent);
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font: 700 12px 'Inter', sans-serif;
+    flex-shrink: 0;
   }
   .rule-text { font-size: 14px; }
-  .rule-text strong { color: var(--text); }
+  .rule-text strong { color: var(--accent); }
 
-  /* PROGRESS */
-  .progress-bar-bg {
-    width: 100%; height: 12px; background: var(--card);
-    border: 1px solid var(--border); border-radius: 100px; overflow: hidden; margin: 16px 0;
+  /* HISTORY */
+  .history-entry {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 8px;
   }
-  .progress-bar-fill {
-    height: 100%; background: linear-gradient(90deg, var(--accent), var(--cyan));
-    border-radius: 100px; transition: width 1s ease;
+  .history-entry .he-date { font-size: 12px; color: var(--text-dim); }
+  .history-entry .he-title { font-weight: 700; margin: 4px 0; }
+  .history-entry .he-detail { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 90px; left: 50%; transform: translateX(-50%);
+    background: var(--accent);
+    color: #000;
+    font: 700 13px 'Inter', sans-serif;
+    padding: 10px 24px;
+    border-radius: 10px;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
   }
-  .progress-labels { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); }
-  .progress-labels span:first-child { color: var(--accent); font-weight: 700; }
+  .toast.show { opacity: 1; }
 
-  /* LOG */
-  .log-entry { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
-  .log-entry-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .log-date { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
-  .log-day-label { font-size: 12px; color: var(--text-dim); background: rgba(255,255,255,0.06); padding: 3px 10px; border-radius: 20px; }
-  .log-exercises { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .log-exercises th { text-align: left; color: var(--text-dim); font-weight: 600; padding: 5px 8px; border-bottom: 1px solid var(--border); }
-  .log-exercises td { padding: 7px 8px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text); }
-  .log-exercises tr:last-child td { border-bottom: none; }
-  .log-note { margin-top: 10px; font-size: 12px; color: var(--text-dim); background: rgba(255,100,0,0.08); border-left: 3px solid var(--orange); padding: 8px 12px; border-radius: 0 6px 6px 0; }
-  .log-note strong { color: var(--orange); }
-  .log-empty { text-align: center; color: var(--text-dim); font-size: 14px; padding: 40px 20px; }
-
-  /* MOBILE */
-  @media (max-width: 600px) {
-    .hero { padding: 40px 16px 24px; }
-    .stats-bar { gap: 8px; }
-    .stat-chip { min-width: 90px; padding: 10px 14px; }
-    .stat-chip .num { font-size: 18px; }
-    .day-header { padding: 16px; }
-    .day-content { padding: 0 16px 16px; }
-    .card { padding: 18px; }
-    .meal-card { padding: 18px; }
-    .exercise-table { font-size: 13px; }
-    .exercise-table th, .exercise-table td { padding: 8px 6px; }
-    .nav-btn { font-size: 12px; padding: 8px 12px; }
+  /* RESPONSIVE */
+  @media (max-width: 400px) {
+    .nav-btn { padding: 12px 10px; font-size: 10px; }
+    .set-row { grid-template-columns: 32px 1fr 1fr 42px; gap: 6px; }
+    .set-input { padding: 8px 4px; font-size: 13px; }
   }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">Hypertrophy Program</div>
-  <h1>140 &rarr; <span>170 lbs</span></h1>
-  <p>5-day push/pull/legs split with swimming &amp; biking. Built for Collin &mdash; 6'0", long limbs, full gym access.</p>
-</div>
-
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stat-chip"><div class="num">5</div><div class="label">Training Days</div></div>
-  <div class="stat-chip"><div class="num">~4K</div><div class="label">Daily Calories</div></div>
-  <div class="stat-chip"><div class="num">200g+</div><div class="label">Protein Target</div></div>
-  <div class="stat-chip"><div class="num">0.5&ndash;0.75</div><div class="label">lbs / week</div></div>
-</div>
-
-<!-- NAV -->
-<div class="nav">
+<!-- TOP NAV -->
+<nav class="top-nav">
   <div class="nav-inner">
-    <button class="nav-btn active" onclick="showSection('today')"><span class="icon">&#9889;</span>Today</button>
-    <button class="nav-btn" onclick="showSection('split')"><span class="icon">&#128197;</span>Weekly Split</button>
-    <button class="nav-btn" onclick="showSection('meals')"><span class="icon">&#127831;</span>Meal Plan</button>
-    <button class="nav-btn" onclick="showSection('body')"><span class="icon">&#128170;</span>Your Build</button>
-    <button class="nav-btn" onclick="showSection('rules')"><span class="icon">&#128207;</span>Rules</button>
-    <button class="nav-btn" onclick="showSection('grocery')"><span class="icon">&#128722;</span>Grocery</button>
-    <button class="nav-btn" onclick="showSection('log')"><span class="icon">&#128200;</span>Log</button>
+    <button class="nav-btn active" onclick="showTab('today')">Today</button>
+    <button class="nav-btn" onclick="showTab('log')">Log</button>
+    <button class="nav-btn" onclick="showTab('weight')">Weight</button>
+    <button class="nav-btn" onclick="showTab('prs')">PRs</button>
+    <button class="nav-btn" onclick="showTab('coach')">Coach</button>
+    <button class="nav-btn" onclick="showTab('split')">Split</button>
+    <button class="nav-btn" onclick="showTab('meals')">Meals</button>
+    <button class="nav-btn" onclick="showTab('grocery')">Grocery</button>
+    <button class="nav-btn" onclick="showTab('body')">Build</button>
+    <button class="nav-btn" onclick="showTab('rules')">Rules</button>
+  </div>
+</nav>
+
+<!-- MINI HERO -->
+<div class="hero-mini">
+  <h1>Collin's <span>Gym Companion</span></h1>
+  <div class="subtitle">140 lbs → 170 lbs | Push/Pull/Legs | No Excuses</div>
+</div>
+
+<!-- ==================== TODAY ==================== -->
+<div id="tab-today" class="section active">
+  <div class="today-header">
+    <div class="day-name" id="todayDayName">Push Day</div>
+    <div class="day-focus" id="todayFocus">Chest, Shoulders, Triceps</div>
+    <div class="day-date" id="todayDate"></div>
+  </div>
+  <div id="todayExercises"></div>
+  <button class="save-btn" onclick="saveTodayWorkout()">Save Workout</button>
+</div>
+
+<!-- ==================== LOG (HISTORY) ==================== -->
+<div id="tab-log" class="section">
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--blue)"></span> Workout History</div>
+    <div id="logList"><p style="color:var(--text-dim);font-size:13px">No workouts logged yet. Hit the gym!</p></div>
   </div>
 </div>
 
-<div class="main">
-
-<!-- ========== TODAY ========== -->
-<div id="today" class="section active">
-  <div class="today-banner">
-    <h2>Thursday March 26 &mdash; <span>Legs + Glutes (Heavy)</span></h2>
-    <p>Heavy day. Deadlifts, front squats, hip thrusts. No shortcuts.</p>
-  </div>
-
-  <div class="body-note">
-    <h4>&#9888;&#65039; Squat Setup for Your Build</h4>
-    Your long femurs mean standard squat cues won't work for you. Use these modifications every time you squat today:
-    <ul>
-      <li><strong>Stance:</strong> Wider than shoulder width, toes pointed out 30&ndash;45&deg;</li>
-      <li><strong>Heels:</strong> Put 5 lb plates under your heels OR wear squat shoes &mdash; this makes up for limited ankle mobility with long legs</li>
-      <li><strong>Forward lean:</strong> Some torso lean is NORMAL for you. Don't try to stay perfectly upright &mdash; that's for short-femur guys</li>
-      <li><strong>Depth:</strong> Go to parallel or just below. Don't force ATG until mobility improves</li>
-      <li><strong>Alternative:</strong> If barbell squats still feel off, swap to Box Squats (sit back to a bench) &mdash; they're built for long-legged lifters</li>
-    </ul>
-  </div>
-
+<!-- ==================== WEIGHT ==================== -->
+<div id="tab-weight" class="section">
   <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--accent)"></span> Legs + Glutes Heavy &mdash; Gym (50&ndash;60 min)</div>
-    <table class="exercise-table">
-      <tr><th>Exercise</th><th>Sets &times; Reps</th><th>Rest</th></tr>
-      <tr>
-        <td>
-          <div class="exercise-name">Barbell Deadlift</div>
-          <div class="exercise-note">Your long arms make this YOUR lift. Less distance to the floor. Go heavy.</div>
-        </td>
-        <td>4 &times; 5&ndash;6</td><td>3 min</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="exercise-name">Front Squat (modified stance)</div>
-          <div class="exercise-note">Wide stance, toes out, heels elevated. Front load counterbalances your long femurs.</div>
-        </td>
-        <td>4 &times; 8&ndash;10</td><td>2 min</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="exercise-name">Barbell Hip Thrusts</div>
-          <div class="exercise-note">#1 glute isolation. Go heavy, control the lockout at the top.</div>
-        </td>
-        <td>4 &times; 8&ndash;10</td><td>2 min</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="exercise-name">Bulgarian Split Squats (DB)</div>
-          <div class="exercise-note">Long legs = deep stretch = maximum glute activation. These will burn.</div>
-        </td>
-        <td>3 &times; 10 each</td><td>90 sec</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="exercise-name">Leg Extensions</div>
-          <div class="exercise-note">Pure quad isolation. Squeeze hard at the top.</div>
-        </td>
-        <td>3 &times; 12&ndash;15</td><td>60 sec</td>
-      </tr>
-      <tr>
-        <td>
-          <div class="exercise-name">Seated Calf Raises</div>
-          <div class="exercise-note">Seated hits the soleus (lower calf). Full ROM, no bouncing.</div>
-        </td>
-        <td>4 &times; 15&ndash;20</td><td>60 sec</td>
-      </tr>
-    </table>
-
-    <div class="why-box" style="margin-top:16px">
-      <strong>Why these exercises?</strong> Deadlifts are the king of posterior chain builders and your best mechanical lift with long arms. Front squats counterbalance your long femurs better than back squats. Hip thrusts directly load glutes in a way squats can't fully replicate. Bulgarian split squats build single-leg strength and your long legs get an insane stretch. Extensions exhaust the quads, and seated calf raises target the soleus that standing raises miss.
+    <div class="card-title"><span class="dot" style="background:var(--accent)"></span> Log Your Weight</div>
+    <div class="weight-input-row">
+      <input type="number" id="weightInput" placeholder="lbs" step="0.1" inputmode="decimal">
+      <button onclick="logWeight()">Log</button>
     </div>
   </div>
-
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--yellow)"></span> Daily Checklist</div>
-    <ul class="checklist" id="checklist">
-      <li onclick="toggleCheck(this)"><div class="check-box"></div>Hit all 6 meals</li>
-      <li onclick="toggleCheck(this)"><div class="check-box"></div>180g+ protein</li>
-      <li onclick="toggleCheck(this)"><div class="check-box"></div>1 gallon water</li>
-      <li onclick="toggleCheck(this)"><div class="check-box"></div>Completed all sets (no shortcuts)</li>
-      <li onclick="toggleCheck(this)"><div class="check-box"></div>Post-workout shake</li>
-      <li onclick="toggleCheck(this)"><div class="check-box"></div>Stretched after (quads, hams, hip flexors)</li>
-      <li onclick="toggleCheck(this)"><div class="check-box"></div>7+ hours sleep tonight</li>
-    </ul>
+  <div class="weight-stat-grid">
+    <div class="weight-stat"><div class="val" id="wCurrent">140</div><div class="label">Current</div></div>
+    <div class="weight-stat"><div class="val" id="wGained" style="color:var(--accent)">+0</div><div class="label">Gained</div></div>
+    <div class="weight-stat"><div class="val" id="wLeft" style="color:var(--orange)">30</div><div class="label">To Go</div></div>
   </div>
-
-  <div class="coach-note">
-    <strong>Coach's Note:</strong> Thursday is your heaviest day of the week. Deadlifts and front squats back to back &mdash; this is where you earn it. Your long arms were built for deadlifts, so don't be afraid to load the bar. Front squats will feel more natural than back squats for your frame. Hip thrusts &mdash; go heavy, squeeze the glutes at lockout. Bulgarians will hurt. Do them anyway. Tomorrow is active recovery. Leave everything on the gym floor today.
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--accent)"></span> 140 → 170 Progress</div>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progressBar" style="width:0%"></div>
+      <div class="progress-bar-text" id="progressText">0%</div>
+    </div>
+    <canvas id="weightChart"></canvas>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--cyan)"></span> Weight Log</div>
+    <div id="weightLogList" class="weight-log-list"></div>
   </div>
 </div>
 
-<!-- ========== YOUR BUILD ========== -->
-<div id="body" class="section">
-  <div class="section-header">
-    <h2>Your Build &amp; What It Means</h2>
-    <p>How your proportions shape your training &mdash; and how to use them to your advantage</p>
-  </div>
-
+<!-- ==================== PRs ==================== -->
+<div id="tab-prs" class="section">
   <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--orange)"></span> Body Analysis &mdash; 6'0", 140 lbs</div>
-    <p style="font-size:14px;color:var(--text-dim);margin-bottom:16px">Based on your photos, here's what matters for your training:</p>
-
-    <div class="body-note" style="margin-bottom:16px">
-      <h4>&#129471; Long Femurs (Thigh Bones)</h4>
-      Your legs make up a large proportion of your height. This is the #1 reason squats feel awkward for you.
-      <ul>
-        <li><strong>What happens:</strong> Long femurs force your torso to lean forward more to keep the barbell over your center of gravity. Your knees also travel further forward.</li>
-        <li><strong>The fix:</strong> Wider stance (outside shoulder width), toes pointed out 30&ndash;45&deg;, and heel elevation (plates or squat shoes). This shortens the effective lever arm and lets you stay more upright.</li>
-        <li><strong>Box squats</strong> are your best friend. Sit back to a box/bench at parallel &mdash; this teaches you to load your hips instead of fighting your knee position.</li>
-        <li><strong>Front squats &amp; goblet squats</strong> may actually feel easier than back squats since the front-loaded weight naturally counterbalances your torso lean.</li>
-        <li><strong>Don't compare your squat to short guys.</strong> Someone 5'8" with short femurs will always squat "prettier." Your mechanics are different and that's fine &mdash; you'll still build big legs.</li>
-      </ul>
-    </div>
-
-    <div class="body-note" style="margin-bottom:16px;background:linear-gradient(135deg, rgba(96,165,250,0.1) 0%, rgba(192,132,252,0.06) 100%);border-color:rgba(96,165,250,0.25)">
-      <h4 style="color:var(--blue)">&#128170; Long Arms</h4>
-      Your wingspan is proportionally long for your frame. This affects pressing and pulling.
-      <ul>
-        <li><strong>Bench press:</strong> Longer range of motion = harder. Don't compare your bench numbers to short-armed guys. Your chest will still grow, it just takes more work per rep.</li>
-        <li><strong>Deadlifts &amp; rows:</strong> This is your ADVANTAGE. Long arms = less distance to pull the bar off the floor. You're mechanically built to deadlift heavy. Lean into it.</li>
-        <li><strong>Pull-ups/chin-ups:</strong> Harder due to longer range of motion. Start with lat pulldowns if needed, work toward bodyweight pull-ups, then add weight.</li>
-        <li><strong>Curls:</strong> Long bicep bellies have huge growth potential. When your arms fill out, they'll look great because there's more surface area.</li>
-      </ul>
-    </div>
-
-    <div class="body-note" style="background:linear-gradient(135deg, rgba(74,222,128,0.1) 0%, rgba(34,211,238,0.06) 100%);border-color:rgba(74,222,128,0.25)">
-      <h4 style="color:var(--accent)">&#127793; Ectomorph Frame &mdash; Your Advantage</h4>
-      You're lean at 140 with visible shoulder definition already. That's a great starting point.
-      <ul>
-        <li><strong>You'll stay lean while gaining.</strong> Your metabolism is fast, which means the 4K calories will go toward muscle, not fat &mdash; as long as you're training hard.</li>
-        <li><strong>Muscle shows faster on lean frames.</strong> At 155 lbs you'll already look noticeably different. By 170 you'll look like a different person.</li>
-        <li><strong>Your shoulders are wide relative to your waist.</strong> This is the V-taper everyone wants. When you add chest, back, and shoulder mass, it'll look really good on your frame.</li>
-        <li><strong>The challenge:</strong> Eating enough. Your appetite will fight you. That's why the meal plan is structured with 6 meals and calorie-dense foods. Treat eating like training &mdash; it's not optional.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--accent)"></span> Squat Modifications Cheat Sheet</div>
-    <table class="exercise-table">
-      <tr><th>Cue</th><th>Standard</th><th>Your Modification</th></tr>
-      <tr><td><div class="exercise-name">Stance Width</div></td><td>Shoulder width</td><td>1.5&times; shoulder width</td></tr>
-      <tr><td><div class="exercise-name">Toe Angle</div></td><td>Slight turn out</td><td>30&ndash;45&deg; turn out</td></tr>
-      <tr><td><div class="exercise-name">Heel</div></td><td>Flat on floor</td><td>Elevated (plates or squat shoes)</td></tr>
-      <tr><td><div class="exercise-name">Torso Angle</div></td><td>Upright</td><td>Some forward lean is NORMAL</td></tr>
-      <tr><td><div class="exercise-name">Depth</div></td><td>ATG (ass to grass)</td><td>Parallel &mdash; don't force deeper yet</td></tr>
-      <tr><td><div class="exercise-name">Best Variation</div></td><td>Back squat</td><td>Box squat or front squat</td></tr>
-    </table>
+    <div class="card-title"><span class="dot" style="background:var(--yellow)"></span> Personal Records</div>
+    <div id="prList"><p style="color:var(--text-dim);font-size:13px">Log workouts to track your PRs automatically.</p></div>
   </div>
 </div>
 
-<!-- ========== WEEKLY SPLIT ========== -->
-<div id="split" class="section">
-  <div class="section-header">
-    <h2>Weekly Split</h2>
-    <p>Sunday&ndash;Friday training, Saturday rest &mdash; tap any day to expand</p>
-  </div>
-
-  <!-- Day 1 - Push -->
-  <div class="day-card" onclick="toggleDay(this)">
-    <div class="day-header">
-      <div class="day-header-left">
-        <div class="day-num" style="background:var(--red-dim);color:var(--red)">Su</div>
-        <div class="day-info"><h3>Push &mdash; Chest, Shoulders, Triceps</h3><span><span class="tag tag-push">PUSH</span></span></div>
-      </div>
-      <div class="day-chevron">&#9660;</div>
-    </div>
-    <div class="day-body"><div class="day-content">
-      <table class="exercise-table">
-        <tr><th>Exercise</th><th>Sets &times; Reps</th><th>Rest</th></tr>
-        <tr><td><div class="exercise-name">Barbell Bench Press</div><div class="exercise-note">The king of chest builders. Compounds chest, front delts, and triceps.</div></td><td>4 &times; 6&ndash;8</td><td>2&ndash;3 min</td></tr>
-        <tr><td><div class="exercise-name">Incline Dumbbell Press</div><div class="exercise-note">Targets upper chest &mdash; the area that creates that full, rounded chest look.</div></td><td>3 &times; 8&ndash;10</td><td>90 sec</td></tr>
-        <tr><td><div class="exercise-name">Cable Flyes (low to high)</div><div class="exercise-note">Isolates the chest with constant tension. Cables keep the muscle loaded at every point.</div></td><td>3 &times; 12&ndash;15</td><td>60 sec</td></tr>
-        <tr><td><div class="exercise-name">Overhead Press</div><div class="exercise-note">Primary shoulder mass builder. Builds the boulder-shoulder look from the front.</div></td><td>4 &times; 6&ndash;8</td><td>2 min</td></tr>
-        <tr><td><div class="exercise-name">Lateral Raises</div><div class="exercise-note">Builds the side delts &mdash; what makes your shoulders look wide. Critical for the V-taper on your frame.</div></td><td>4 &times; 12&ndash;15</td><td>60 sec</td></tr>
-        <tr><td><div class="exercise-name">Tricep Dips (weighted)</div><div class="exercise-note">Heavy compound tricep movement. Triceps are 2/3 of your arm size &mdash; don't neglect them.</div></td><td>3 &times; 8&ndash;10</td><td>90 sec</td></tr>
-        <tr><td><div class="exercise-name">Overhead Tricep Extension</div><div class="exercise-note">Targets the long head of the triceps (the part you see from behind). Stretches under load for max growth.</div></td><td>3 &times; 12&ndash;15</td><td>60 sec</td></tr>
-      </table>
-      <div class="why-box" style="margin-top:16px;background:var(--red-dim);border-color:rgba(248,113,113,0.15)">
-        <strong style="color:var(--red)">Why this order?</strong> Heavy compound first (bench, OHP) when you're freshest and can move the most weight. Isolation work last (flyes, lateral raises, extensions) to exhaust the muscle with lighter loads. Your long arms mean bench will be tough &mdash; focus on controlled reps, not ego weight.
-      </div>
-    </div></div>
-  </div>
-
-  <!-- Day 2 - Pull -->
-  <div class="day-card" onclick="toggleDay(this)">
-    <div class="day-header">
-      <div class="day-header-left">
-        <div class="day-num" style="background:var(--blue-dim);color:var(--blue)">M</div>
-        <div class="day-info"><h3>Pull &mdash; Back, Biceps, Rear Delts</h3><span><span class="tag tag-pull">PULL</span></span></div>
-      </div>
-      <div class="day-chevron">&#9660;</div>
-    </div>
-    <div class="day-body"><div class="day-content">
-      <table class="exercise-table">
-        <tr><th>Exercise</th><th>Sets &times; Reps</th><th>Rest</th></tr>
-        <tr><td><div class="exercise-name">Barbell Rows</div><div class="exercise-note">The bench press of back exercises. Builds thick lats and rhomboids. Your long arms give you a great stretch here.</div></td><td>4 &times; 6&ndash;8</td><td>2&ndash;3 min</td></tr>
-        <tr><td><div class="exercise-name">Weighted Pull-Ups</div><div class="exercise-note">The ultimate back width builder. Harder with long arms but the payoff is massive lat development.</div></td><td>4 &times; 6&ndash;10</td><td>2 min</td></tr>
-        <tr><td><div class="exercise-name">Seated Cable Row</div><div class="exercise-note">Targets mid-back thickness. Squeeze your shoulder blades together at the end of every rep.</div></td><td>3 &times; 10&ndash;12</td><td>90 sec</td></tr>
-        <tr><td><div class="exercise-name">Face Pulls</div><div class="exercise-note">Rear delts + rotator cuff health. Prevents the "rounded forward" posture from all the pressing. Non-negotiable.</div></td><td>4 &times; 15&ndash;20</td><td>60 sec</td></tr>
-        <tr><td><div class="exercise-name">Barbell Curls</div><div class="exercise-note">Heavy bicep compound. Long arms = long bicep bellies = big growth potential.</div></td><td>3 &times; 8&ndash;10</td><td>60 sec</td></tr>
-        <tr><td><div class="exercise-name">Incline Dumbbell Curls</div><div class="exercise-note">Stretches the bicep at the bottom for maximum muscle damage. Great for the long head (the peak).</div></td><td>3 &times; 10&ndash;12</td><td>60 sec</td></tr>
-        <tr><td><div class="exercise-name">Hammer Curls</div><div class="exercise-note">Targets the brachialis (between bicep and tricep) which pushes the bicep up and makes your arm look thicker.</div></td><td>2 &times; 12&ndash;15</td><td>60 sec</td></tr>
-      </table>
-      <div class="why-box blue" style="margin-top:16px">
-        <strong>Why this matters for you:</strong> Your long arms are a huge advantage on every pulling movement. You get a deeper stretch and longer range of motion, which means more muscle fiber recruitment per rep. Your back and biceps have the highest growth ceiling on your frame &mdash; train them hard.
-      </div>
-    </div></div>
-  </div>
-
-  <!-- Day 3 - Legs + Swim -->
-  <div class="day-card" onclick="toggleDay(this)">
-    <div class="day-header">
-      <div class="day-header-left">
-        <div class="day-num" style="background:var(--accent-dim);color:var(--accent)">Tu</div>
-        <div class="day-info"><h3>Legs + Swimming</h3><span><span class="tag tag-legs">LEGS</span> <span class="tag tag-swim">SWIM</span></span></div>
-      </div>
-      <div class="day-chevron">&#9660;</div>
-    </div>
-    <div class="day-body"><div class="day-content">
-      <table class="exercise-table">
-        <tr><th>Exercise</th><th>Sets &times; Reps</th><th>Rest</th></tr>
-        <tr><td><div class="exercise-name">Barbell Back Squat (modified)</div><div class="exercise-note">Wide stance, toes out, heels elevated. The foundation of leg development &mdash; hits quads, glutes, core.</div></td><td>4 &times; 6&ndash;8</td><td>2&ndash;3 min</td></tr>
-        <tr><td><div class="exercise-name">Romanian Deadlift</div><div class="exercise-note">Best hamstring builder that exists. The hip hinge pattern also strengthens your lower back and glutes.</div></td><td>4 &times; 8&ndash;10</td><td>2 min</td></tr>
-        <tr><td><div class="exercise-name">Leg Press</div><div class="exercise-note">Safe, heavy quad loading without spinal compression. Great for adding volume after squats.</div></td><td>3 &times; 10&ndash;12</td><td>90 sec</td></tr>
-        <tr><td><div class="exercise-name">Walking Lunges (DB)</div><div class="exercise-note">Unilateral work that fixes imbalances and hammers glutes. Long legs = deeper stretch = more glute activation.</div></td><td>3 &times; 10 each</td><td>90 sec</td></tr>
-        <tr><td><div class="exercise-name">Leg Curls</div><div class="exercise-note">Isolates hamstrings. Important for knee health and balanced leg development.</div></td><td>3 &times; 12&ndash;15</td><td>60 sec</td></tr>
-        <tr><td><div class="exercise-name">Standing Calf Raises</div><div class="exercise-note">Calves need direct, heavy work &mdash; they won't grow from squats alone. Full stretch at bottom is key.</div></td><td>4 &times; 12&ndash;15</td><td>60 sec</td></tr>
-      </table>
-      <div class="cardio-block swim">
-        <h4>&#127946; Pool Session &mdash; ~600m</h4>
-        <div class="cardio-item"><span>Warm-Up</span><span>200m easy freestyle</span></div>
-        <div class="cardio-item"><span>Main Set</span><span>6 &times; 50m freestyle, 20s rest</span></div>
-        <div class="cardio-item"><span>Kick Set</span><span>4 &times; 25m kick with board</span></div>
-        <div class="cardio-item"><span>Cool-Down</span><span>100m easy backstroke</span></div>
-      </div>
-      <div class="why-box cyan" style="margin-top:14px">
-        <strong>Why swim on leg day?</strong> Low-impact active recovery that flushes lactic acid from your legs. The kick set extends your quad/glute work. Freestyle builds lats and shoulders as a bonus. Builds cardio without joint stress &mdash; essential for a guy who's going to be putting on 30 lbs.
-      </div>
-    </div></div>
-  </div>
-
-  <!-- Day 4 - Upper + Bike -->
-  <div class="day-card" onclick="toggleDay(this)">
-    <div class="day-header">
-      <div class="day-header-left">
-        <div class="day-num" style="background:var(--purple-dim);color:var(--purple)">W</div>
-        <div class="day-info"><h3>Upper Body Hybrid + Bike</h3><span><span class="tag tag-upper">UPPER</span> <span class="tag tag-bike">BIKE</span></span></div>
-      </div>
-      <div class="day-chevron">&#9660;</div>
-    </div>
-    <div class="day-body"><div class="day-content">
-      <table class="exercise-table">
-        <tr><th>Exercise</th><th>Sets &times; Reps</th><th>Rest</th></tr>
-        <tr><td><div class="exercise-name">Incline Barbell Bench</div><div class="exercise-note">Second chest session of the week at incline &mdash; upper chest needs extra frequency to fill out.</div></td><td>4 &times; 8&ndash;10</td><td>2 min</td></tr>
-        <tr><td><div class="exercise-name">Weighted Chin-Ups</div><div class="exercise-note">Underhand grip shifts emphasis to biceps while still hammering back. Doubles as a bicep compound.</div></td><td>4 &times; 6&ndash;10</td><td>2 min</td></tr>
-        <tr><td><div class="exercise-name">Arnold Press</div><div class="exercise-note">Rotational pressing hits all three delt heads in one movement. More complete than a standard press.</div></td><td>3 &times; 10&ndash;12</td><td>90 sec</td></tr>
-        <tr><td><div class="exercise-name">Cable Rows (close grip)</div><div class="exercise-note">Close grip hits lower lats and builds back thickness. Different angle from Tuesday's rows.</div></td><td>3 &times; 10&ndash;12</td><td>90 sec</td></tr>
-        <tr><td><div class="exercise-name">Chest Dips (lean forward)</div><div class="exercise-note">Leaning forward shifts emphasis to lower chest. Also a heavy tricep movement. Win-win.</div></td><td>3 &times; 8&ndash;12</td><td>90 sec</td></tr>
-        <tr><td><div class="exercise-name">Cable Lateral Raises</div><div class="exercise-note">Cables keep constant tension on side delts through the full range &mdash; better than dumbbells for this.</div></td><td>3 &times; 12&ndash;15</td><td>60 sec</td></tr>
-        <tr><td><div class="exercise-name">EZ Curl + Pushdown Superset</div><div class="exercise-note">Superset saves time and creates a massive arm pump. Biceps and triceps trained together = balanced growth.</div></td><td>3 &times; 10&ndash;12 each</td><td>60 sec</td></tr>
-      </table>
-      <div class="cardio-block bike">
-        <h4>&#128692; Bike Session &mdash; 20&ndash;30 min</h4>
-        <div class="cardio-item"><span>Warm-Up</span><span>5 min easy spin</span></div>
-        <div class="cardio-item"><span>Intervals</span><span>6 &times; (1 min hard / 1 min easy)</span></div>
-        <div class="cardio-item"><span>Steady State</span><span>8&ndash;10 min moderate</span></div>
-        <div class="cardio-item"><span>Cool-Down</span><span>3 min easy spin</span></div>
-      </div>
-      <div class="why-box orange" style="margin-top:14px">
-        <strong>Why bike on upper day?</strong> Cycling builds leg conditioning and cardiovascular capacity without fatiguing your upper body. The intervals boost your metabolism for lean gains &mdash; you'll partition more calories toward muscle instead of fat. It also preps your legs for Friday's heavy session.
-      </div>
-    </div></div>
-  </div>
-
-  <!-- Day 5 - Legs Heavy -->
-  <div class="day-card" onclick="toggleDay(this)">
-    <div class="day-header">
-      <div class="day-header-left">
-        <div class="day-num" style="background:var(--accent-dim);color:var(--accent)">Th</div>
-        <div class="day-info"><h3>Legs + Glutes (Heavy)</h3><span><span class="tag tag-legs">LEGS</span></span></div>
-      </div>
-      <div class="day-chevron">&#9660;</div>
-    </div>
-    <div class="day-body"><div class="day-content">
-      <table class="exercise-table">
-        <tr><th>Exercise</th><th>Sets &times; Reps</th><th>Rest</th></tr>
-        <tr><td><div class="exercise-name">Barbell Deadlift</div><div class="exercise-note">Your long arms make this YOUR lift. Less distance to the floor = mechanical advantage. Go heavy.</div></td><td>4 &times; 5&ndash;6</td><td>3 min</td></tr>
-        <tr><td><div class="exercise-name">Front Squat</div><div class="exercise-note">Front-loaded weight counterbalances your long femurs &mdash; may feel more natural than back squats. Quad dominant.</div></td><td>4 &times; 8&ndash;10</td><td>2 min</td></tr>
-        <tr><td><div class="exercise-name">Barbell Hip Thrusts</div><div class="exercise-note">The #1 glute isolation exercise. Direct glute loading that squats and deadlifts can't fully replicate.</div></td><td>4 &times; 8&ndash;10</td><td>2 min</td></tr>
-        <tr><td><div class="exercise-name">Bulgarian Split Squats</div><div class="exercise-note">Single-leg quad and glute destroyer. Long legs = deep stretch = maximum glute activation at the bottom.</div></td><td>3 &times; 10 each</td><td>90 sec</td></tr>
-        <tr><td><div class="exercise-name">Leg Extensions</div><div class="exercise-note">Pure quad isolation. Great finisher to exhaust whatever's left. Focus on squeezing at the top.</div></td><td>3 &times; 12&ndash;15</td><td>60 sec</td></tr>
-        <tr><td><div class="exercise-name">Seated Calf Raises</div><div class="exercise-note">Seated targets the soleus (lower calf). Standing (Wednesday) hits the gastrocnemius. Need both for full calves.</div></td><td>4 &times; 15&ndash;20</td><td>60 sec</td></tr>
-      </table>
-      <div class="why-box" style="margin-top:16px">
-        <strong>Why two leg days?</strong> Legs are the biggest muscle group in your body. More leg muscle = more testosterone release = more total-body growth. You want visible glutes and quads at 170? You need to hit them twice a week. Wednesday is moderate volume + swim, Friday is heavy + intensity. Different stimulus, same goal.
-      </div>
-    </div></div>
-  </div>
-
-  <!-- Day 6 - Recovery -->
-  <div class="day-card" onclick="toggleDay(this)">
-    <div class="day-header">
-      <div class="day-header-left">
-        <div class="day-num" style="background:var(--yellow-dim);color:var(--yellow)">F</div>
-        <div class="day-info"><h3>Active Recovery</h3><span><span class="tag tag-swim">SWIM</span> or <span class="tag tag-bike">BIKE</span></span></div>
-      </div>
-      <div class="day-chevron">&#9660;</div>
-    </div>
-    <div class="day-body"><div class="day-content">
-      <p style="font-size:14px;color:var(--text-dim);margin-bottom:12px">Pick one or combine both. Keep it easy &mdash; this is recovery, not training.</p>
-      <div class="cardio-block swim">
-        <h4>&#127946; Easy Swim &mdash; 20&ndash;30 min</h4>
-        <div class="cardio-item"><span>Pace</span><span>Conversational, continuous</span></div>
-        <div class="cardio-item"><span>Strokes</span><span>Mix freestyle + backstroke</span></div>
-      </div>
-      <div class="cardio-block bike" style="margin-top:12px">
-        <h4>&#128692; Easy Bike &mdash; 30 min</h4>
-        <div class="cardio-item"><span>Pace</span><span>Flat terrain, low heart rate</span></div>
-        <div class="cardio-item"><span>Goal</span><span>Blood flow, not effort</span></div>
-      </div>
-      <p style="font-size:13px;color:var(--text-dim);margin-top:14px">+ 10&ndash;15 min stretching / foam rolling (quads, hamstrings, hip flexors, lats)</p>
-      <div class="why-box" style="margin-top:14px;background:var(--yellow-dim);border-color:rgba(250,204,21,0.15)">
-        <strong style="color:var(--yellow)">Why active recovery?</strong> Light movement increases blood flow to damaged muscles, speeding up repair. Complete rest is for Sunday. Saturday's easy session helps you walk into Monday's push day feeling recovered instead of stiff.
-      </div>
-    </div></div>
-  </div>
-
-  <!-- Day 7 - Rest -->
-  <div class="day-card">
-    <div class="day-header">
-      <div class="day-header-left">
-        <div class="day-num" style="background:rgba(255,255,255,0.05);color:var(--text-dim)">Sa</div>
-        <div class="day-info"><h3>Full Rest</h3><span><span class="tag tag-rest">REST</span></span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Progress -->
-  <div class="card" style="margin-top:24px">
-    <div class="card-title"><span class="dot" style="background:var(--accent)"></span> Your Journey</div>
-    <div class="progress-labels"><span>140 lbs</span><span style="color:var(--text-dim)">170 lbs</span></div>
-    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%"></div></div>
-    <p style="font-size:13px;color:var(--text-dim);text-align:center;margin-top:8px">Target: 0.5&ndash;0.75 lbs/week &rarr; ~10&ndash;15 months to goal</p>
+<!-- ==================== COACH ==================== -->
+<div id="tab-coach" class="section">
+  <button class="coach-btn" onclick="runCoach()">Analyze My Training</button>
+  <div class="coach-area">
+    <div class="coach-msg" id="coachOutput">Hit the button and your AI Coach will analyze your recent workouts, flag stalls, and tell you exactly what to push harder on. Log some workouts first for the best feedback.</div>
   </div>
 </div>
 
-<!-- ========== MEAL PLAN ========== -->
-<div id="meals" class="section">
-  <div class="section-header">
-    <h2>Daily Meal Plan</h2>
-    <p>~3,950 calories &middot; ~240g protein &middot; 6 meals per day</p>
+<!-- ==================== SPLIT ==================== -->
+<div id="tab-split" class="section">
+  <div id="splitView"></div>
+</div>
+
+<!-- ==================== MEALS ==================== -->
+<div id="tab-meals" class="section">
+  <div class="macro-total">
+    <h2>3,800+ cals</h2>
+    <div class="sub">~200g protein | ~450g carbs | ~130g fat</div>
   </div>
 
   <div class="meal-card">
-    <div class="meal-header"><h3>Meal 1 &mdash; Breakfast</h3><div class="meal-cals">~800 cal</div></div>
-    <div class="meal-time">7&ndash;8 AM</div>
-    <ul class="meal-items">
-      <li>4 whole eggs scrambled</li>
-      <li>2 slices sourdough toast with butter</li>
-      <li>1 banana</li>
-      <li>1 glass whole milk (12 oz)</li>
-    </ul>
-    <div class="macro-row">
-      <div class="macro-pill">P: <span>40g</span></div>
-      <div class="macro-pill">C: <span>75g</span></div>
-      <div class="macro-pill">F: <span>35g</span></div>
-    </div>
+    <h3>Meal 1 — Breakfast (7:30 AM)</h3>
+    <div class="meal-items">4 whole eggs scrambled<br>2 slices sourdough toast w/ butter<br>1 banana<br>1 glass whole milk</div>
+    <div class="meal-macros">~750 cal | 38g P</div>
   </div>
 
   <div class="meal-card">
-    <div class="meal-header"><h3>Meal 2 &mdash; Mid-Morning</h3><div class="meal-cals">~500 cal</div></div>
-    <div class="meal-time">10 AM</div>
-    <ul class="meal-items">
-      <li>Greek yogurt (1 cup, full fat)</li>
-      <li>&frac12; cup granola</li>
-      <li>1 tbsp honey</li>
-      <li>Handful of almonds (~1 oz)</li>
-    </ul>
-    <div class="macro-row">
-      <div class="macro-pill">P: <span>25g</span></div>
-      <div class="macro-pill">C: <span>55g</span></div>
-      <div class="macro-pill">F: <span>22g</span></div>
-    </div>
+    <h3>Meal 2 — Mid-Morning (10:00 AM)</h3>
+    <div class="meal-items">Protein shake (2 scoops whey + whole milk + 2 tbsp PB + banana)</div>
+    <div class="meal-macros">~700 cal | 55g P</div>
   </div>
 
   <div class="meal-card">
-    <div class="meal-header"><h3>Meal 3 &mdash; Lunch</h3><div class="meal-cals">~900 cal</div></div>
-    <div class="meal-time">12:30 PM</div>
-    <ul class="meal-items">
-      <li>8 oz chicken thighs grilled</li>
-      <li>1.5 cups white rice</li>
-      <li>1 cup broccoli or mixed veggies</li>
-      <li>Drizzle olive oil on everything</li>
-    </ul>
-    <div class="macro-row">
-      <div class="macro-pill">P: <span>55g</span></div>
-      <div class="macro-pill">C: <span>95g</span></div>
-      <div class="macro-pill">F: <span>25g</span></div>
-    </div>
+    <h3>Meal 3 — Lunch (12:30 PM)</h3>
+    <div class="meal-items">8 oz chicken thigh or ground beef<br>1.5 cups white rice<br>Steamed broccoli<br>Drizzle olive oil</div>
+    <div class="meal-macros">~800 cal | 50g P</div>
   </div>
 
   <div class="meal-card">
-    <div class="meal-header"><h3>Meal 4 &mdash; Pre-Workout</h3><div class="meal-cals">~450 cal</div></div>
-    <div class="meal-time">3&ndash;4 PM</div>
-    <ul class="meal-items">
-      <li>PB&amp;J sandwich (2 tbsp PB, whole wheat)</li>
-      <li>1 banana</li>
-    </ul>
-    <div class="macro-row">
-      <div class="macro-pill">P: <span>15g</span></div>
-      <div class="macro-pill">C: <span>60g</span></div>
-      <div class="macro-pill">F: <span>18g</span></div>
-    </div>
+    <h3>Meal 4 — Pre-Workout (3:00 PM)</h3>
+    <div class="meal-items">PB&J sandwich on white bread<br>Greek yogurt (whole milk)<br>Handful of trail mix</div>
+    <div class="meal-macros">~650 cal | 28g P</div>
   </div>
 
   <div class="meal-card">
-    <div class="meal-header"><h3>Meal 5 &mdash; Post-Workout Shake</h3><div class="meal-cals">~500 cal</div></div>
-    <div class="meal-time">Within 30 min of training</div>
-    <ul class="meal-items">
-      <li>2 scoops whey protein</li>
-      <li>1 banana</li>
-      <li>2 tbsp peanut butter</li>
-      <li>1 cup whole milk &mdash; blend with ice</li>
-    </ul>
-    <div class="macro-row">
-      <div class="macro-pill">P: <span>55g</span></div>
-      <div class="macro-pill">C: <span>45g</span></div>
-      <div class="macro-pill">F: <span>18g</span></div>
-    </div>
+    <h3>Meal 5 — Dinner (6:30 PM)</h3>
+    <div class="meal-items">8 oz steak, salmon, or chicken breast<br>Sweet potato or pasta<br>Side salad with olive oil<br>Dinner roll</div>
+    <div class="meal-macros">~800 cal | 50g P</div>
   </div>
 
   <div class="meal-card">
-    <div class="meal-header"><h3>Meal 6 &mdash; Dinner</h3><div class="meal-cals">~800 cal</div></div>
-    <div class="meal-time">7:30 PM</div>
-    <ul class="meal-items">
-      <li>8 oz ground beef (85/15) or salmon</li>
-      <li>Large sweet potato or white potato</li>
-      <li>Side salad with olive oil dressing</li>
-      <li>Glass of whole milk</li>
-    </ul>
-    <div class="macro-row">
-      <div class="macro-pill">P: <span>50g</span></div>
-      <div class="macro-pill">C: <span>65g</span></div>
-      <div class="macro-pill">F: <span>30g</span></div>
-    </div>
-  </div>
-
-  <div class="card" style="text-align:center;margin-top:8px">
-    <div class="card-title" style="justify-content:center"><span class="dot" style="background:var(--accent)"></span> Daily Totals</div>
-    <div class="macro-row" style="justify-content:center">
-      <div class="macro-pill" style="font-size:14px">Calories: <span style="color:var(--accent)">~3,950</span></div>
-      <div class="macro-pill" style="font-size:14px">Protein: <span style="color:var(--accent)">~240g</span></div>
-      <div class="macro-pill" style="font-size:14px">Carbs: <span style="color:var(--accent)">~395g</span></div>
-      <div class="macro-pill" style="font-size:14px">Fats: <span style="color:var(--accent)">~148g</span></div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:16px">
-    <div class="card-title"><span class="dot" style="background:var(--orange)"></span> Struggling to Eat Enough?</div>
-    <ul class="meal-items">
-      <li>Add olive oil to rice, veggies, or shakes (+120 cal/tbsp)</li>
-      <li>Switch to whole milk everywhere (+50 cal vs 2%)</li>
-      <li>Extra spoon of peanut butter before bed (+100 cal)</li>
-      <li>Trail mix as a carry-around snack (~170 cal/handful)</li>
-    </ul>
+    <h3>Meal 6 — Before Bed (9:30 PM)</h3>
+    <div class="meal-items">Casein shake or cottage cheese<br>2 tbsp peanut butter<br>Handful almonds</div>
+    <div class="meal-macros">~500 cal | 35g P</div>
   </div>
 </div>
 
-<!-- ========== RULES ========== -->
-<div id="rules" class="section">
-  <div class="section-header">
-    <h2>Rules to Live By</h2>
-    <p>Follow these and the results will come. Break them and you'll stay 140.</p>
-  </div>
-
+<!-- ==================== GROCERY ==================== -->
+<div id="tab-grocery" class="section">
   <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--accent)"></span> Training Rules</div>
-    <div class="rule"><div class="rule-num">1</div><div class="rule-text"><strong>Track every workout.</strong> Write down the weight and reps for each set. What gets measured gets managed.</div></div>
-    <div class="rule"><div class="rule-num">2</div><div class="rule-text"><strong>Progressive overload.</strong> If you hit the top of the rep range on all sets, go up in weight next session.</div></div>
-    <div class="rule"><div class="rule-num">3</div><div class="rule-text"><strong>Deload every 5th week.</strong> Drop all weights by 40% and do the same reps. Your body needs recovery to grow.</div></div>
-    <div class="rule"><div class="rule-num">4</div><div class="rule-text"><strong>If you miss a rep target two sessions in a row,</strong> stay at the same weight &mdash; don't go backward.</div></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--orange)"></span> Nutrition Rules</div>
-    <div class="rule"><div class="rule-num">1</div><div class="rule-text"><strong>Never skip a meal.</strong> Set alarms if you have to. Missing meals is the #1 reason skinny guys stay skinny.</div></div>
-    <div class="rule"><div class="rule-num">2</div><div class="rule-text"><strong>Eat even when you're not hungry.</strong> You're 140 lbs &mdash; your appetite is lying to you.</div></div>
-    <div class="rule"><div class="rule-num">3</div><div class="rule-text"><strong>Protein at every meal.</strong> No exceptions. Aim for 30g+ per meal minimum.</div></div>
-    <div class="rule"><div class="rule-num">4</div><div class="rule-text"><strong>Meal prep on Sunday.</strong> Cook rice, chicken, and potatoes in bulk. Makes the week effortless.</div></div>
-    <div class="rule"><div class="rule-num">5</div><div class="rule-text"><strong>Drink a gallon of water a day</strong> on top of the milk.</div></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--cyan)"></span> Weight Tracking</div>
-    <div class="rule"><div class="rule-num">1</div><div class="rule-text"><strong>Weigh yourself every morning,</strong> same time, after using the bathroom. Track the weekly average, not daily swings.</div></div>
-    <div class="rule"><div class="rule-num">2</div><div class="rule-text"><strong>Target: 0.5&ndash;0.75 lbs per week.</strong> That's 2&ndash;3 lbs per month of mostly lean mass.</div></div>
-    <div class="rule"><div class="rule-num">3</div><div class="rule-text"><strong>If your average isn't going up after 2 weeks,</strong> add 250 more calories per day.</div></div>
-    <div class="rule"><div class="rule-num">4</div><div class="rule-text"><strong>Timeline to 170 lbs:</strong> ~10&ndash;15 months of consistent training and eating. This is a marathon, not a sprint.</div></div>
+    <div class="card-title"><span class="dot" style="background:var(--orange)"></span> Weekly Grocery List</div>
+    <div id="groceryListContainer"></div>
   </div>
 </div>
 
-<!-- ========== GROCERY ========== -->
-<div id="grocery" class="section">
-  <div class="section-header">
-    <h2>Weekly Grocery List</h2>
-    <p>Tap items to mark them as bought &mdash; prices based on March 2026 US averages</p>
-  </div>
-
-  <!-- COST SUMMARY -->
-  <div class="cost-summary">
-    <h2>Weekly Total: <span>$110 &ndash; $135</span></h2>
-    <p class="cost-subtitle">~$470&ndash;$580 per month to fuel your bulk</p>
-    <div class="cost-grid">
-      <div class="cost-cat"><div class="cost-cat-label">Proteins</div><div class="cost-cat-amount green">$45&ndash;55</div></div>
-      <div class="cost-cat"><div class="cost-cat-label">Carbs &amp; Produce</div><div class="cost-cat-amount orange">$18&ndash;25</div></div>
-      <div class="cost-cat"><div class="cost-cat-label">Dairy &amp; Fats</div><div class="cost-cat-amount blue">$15&ndash;20</div></div>
-      <div class="cost-cat"><div class="cost-cat-label">Supplements</div><div class="cost-cat-amount purple">$15&ndash;18</div></div>
-      <div class="cost-cat"><div class="cost-cat-label">Extras</div><div class="cost-cat-amount yellow">$8&ndash;12</div></div>
-    </div>
-    <div class="cost-note">
-      <strong>Money-saving tip:</strong> Ground beef is the priciest item right now (up ~22% in 2026). Eggs have dropped big from last year. Buying at Costco or Aldi can bring you closer to $110/week. Whey protein on sale saves $20&ndash;30/tub.
-    </div>
-    <div class="cost-updated">Prices updated March 2026 &bull; USDA &amp; BLS data</div>
-  </div>
-
+<!-- ==================== BODY / BUILD ==================== -->
+<div id="tab-body" class="section">
   <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--accent)"></span> Proteins <span style="margin-left:auto;font-size:13px;color:var(--accent);font-weight:700">$45&ndash;55</span></div>
-    <div class="grocery-grid">
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Eggs (2&ndash;3 dozen)<span class="grocery-price">$5&ndash;8</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Chicken thighs (3&ndash;4 lbs)<span class="grocery-price">$10&ndash;14</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Ground beef 85/15 (2 lbs)<span class="grocery-price">$13&ndash;14</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Salmon fillets (optional)<span class="grocery-price">$8&ndash;12</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Greek yogurt full fat (32 oz)<span class="grocery-price">$5&ndash;6</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Whey protein (5 lb tub)*<span class="grocery-price">$15&ndash;18/wk</span></div>
+    <div class="card-title"><span class="dot" style="background:var(--purple)"></span> Body Analysis</div>
+    <div class="body-stat">
+      <div class="label">Weight</div>
+      <div class="row"><span class="current">140 lbs</span><span class="target">Target: 170 lbs</span></div>
     </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--orange)"></span> Carbs &amp; Produce <span style="margin-left:auto;font-size:13px;color:var(--orange);font-weight:700">$18&ndash;25</span></div>
-    <div class="grocery-grid">
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>White rice (5 lb bag)<span class="grocery-price">~$3/wk</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Sweet potatoes (5&ndash;6)<span class="grocery-price">$4&ndash;5</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Sourdough bread<span class="grocery-price">$4&ndash;5</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Whole wheat bread<span class="grocery-price">$3&ndash;4</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Bananas (7+)<span class="grocery-price">$2&ndash;3</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Granola<span class="grocery-price">$4&ndash;5</span></div>
+    <div class="body-stat">
+      <div class="label">Body Type</div>
+      <div class="row"><span class="current">Ectomorph</span><span class="target">Hard gainer — eat big</span></div>
     </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--blue)"></span> Dairy &amp; Fats <span style="margin-left:auto;font-size:13px;color:var(--blue);font-weight:700">$15&ndash;20</span></div>
-    <div class="grocery-grid">
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Whole milk (1 gallon)<span class="grocery-price">$4&ndash;5</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Peanut butter (natural)<span class="grocery-price">$5&ndash;6</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Olive oil<span class="grocery-price">$2&ndash;3/wk</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Butter<span class="grocery-price">$4&ndash;5</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Almonds (~1 lb)<span class="grocery-price">~$4/wk</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Honey<span class="grocery-price">$3&ndash;4</span></div>
+    <div class="body-stat">
+      <div class="label">Height</div>
+      <div class="row"><span class="current">6'0"</span><span class="target">Frame: tall & lean</span></div>
     </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--accent)"></span> Veggies <span style="margin-left:auto;font-size:13px;color:var(--accent);font-weight:700">$5&ndash;7</span></div>
-    <div class="grocery-grid">
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Broccoli / frozen mix<span class="grocery-price">$3&ndash;4</span></div>
-      <div class="grocery-item" onclick="toggleGrocery(this)"><div class="grocery-check"></div>Salad mix<span class="grocery-price">$3&ndash;4</span></div>
+    <div class="body-stat">
+      <div class="label">BMI (current)</div>
+      <div class="row"><span class="current">19.0</span><span class="target">Target: ~23 (170 lbs)</span></div>
+    </div>
+    <div class="body-stat">
+      <div class="label">TDEE Estimate</div>
+      <div class="row"><span class="current">~2,800 cal</span><span class="target">Eating 3,800+ for surplus</span></div>
+    </div>
+    <div class="body-stat">
+      <div class="label">Weekly Weight Gain Target</div>
+      <div class="row"><span class="current">0.5 – 0.75 lbs/week</span><span class="target">Lean bulk pace</span></div>
+    </div>
+    <div class="body-stat">
+      <div class="label">Priority Muscles</div>
+      <div class="row"><span class="current">Chest, Arms, Back, Glutes</span><span class="target">Visible mass</span></div>
+    </div>
+    <div class="body-stat">
+      <div class="label">Estimated Timeline</div>
+      <div class="row"><span class="current">8–10 months</span><span class="target">Consistent surplus + training</span></div>
     </div>
   </div>
 </div>
 
-
-<!-- ========== WORKOUT LOG ========== -->
-<div id="log" class="section">
-  <div class="section-header">
-    <h2>Workout Log</h2>
-    <p>Every session logged. Track your progress over time.</p>
-  </div>
-
-  <!-- WEEK 1 -->
+<!-- ==================== RULES ==================== -->
+<div id="tab-rules" class="section">
   <div class="card">
-    <div class="card-title"><span class="dot" style="background:var(--accent)"></span> Week of March 24, 2026</div>
+    <div class="card-title"><span class="dot" style="background:var(--red)"></span> The Rules</div>
+    <div class="rule-item"><div class="rule-num">1</div><div class="rule-text"><strong>Never skip a workout.</strong> If you miss a day, double up. No excuses.</div></div>
+    <div class="rule-item"><div class="rule-num">2</div><div class="rule-text"><strong>Eat every meal.</strong> If you're not hungry, eat anyway. You're 140 lbs — hunger is not your friend.</div></div>
+    <div class="rule-item"><div class="rule-num">3</div><div class="rule-text"><strong>Track everything.</strong> If you're not tracking, you're guessing. Log your sets, your weight, your food.</div></div>
+    <div class="rule-item"><div class="rule-num">4</div><div class="rule-text"><strong>Progressive overload.</strong> Add weight or reps every week. If you're lifting the same, you're not growing.</div></div>
+    <div class="rule-item"><div class="rule-num">5</div><div class="rule-text"><strong>Sleep 7–9 hours.</strong> Muscles grow while you sleep. Stop scrolling at midnight.</div></div>
+    <div class="rule-item"><div class="rule-num">6</div><div class="rule-text"><strong>1 gallon of water daily.</strong> Hydration affects performance, digestion, and recovery.</div></div>
+    <div class="rule-item"><div class="rule-num">7</div><div class="rule-text"><strong>Creatine every day.</strong> 5g daily, no loading phase needed. Don't overthink it.</div></div>
+    <div class="rule-item"><div class="rule-num">8</div><div class="rule-text"><strong>Weigh in every morning.</strong> Same time, after bathroom, before food. Track the trend.</div></div>
+    <div class="rule-item"><div class="rule-num">9</div><div class="rule-text"><strong>No ego lifting.</strong> Full range of motion. Control the weight. Feel the muscle.</div></div>
+    <div class="rule-item"><div class="rule-num">10</div><div class="rule-text"><strong>Trust the process.</strong> 30 lbs of muscle takes time. Show up every day and it will happen.</div></div>
+  </div>
+</div>
 
-    <!-- Thu Mar 26 — Legs Heavy -->
-    <div class="log-entry">
-      <div class="log-entry-header">
-        <span class="log-date">Thu, Mar 26</span>
-        <span class="log-day-label">Legs + Glutes (Heavy)</span>
-      </div>
-      <table class="log-exercises">
-        <thead>
-          <tr><th>Exercise</th><th>Sets × Reps</th><th>Weight</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Romanian Deadlift</td><td>1 × 8</td><td>50 lbs (warm-up)</td></tr>
-          <tr><td>Romanian Deadlift</td><td>2 × 8</td><td>90 lbs</td></tr>
-          <tr><td>Leg Press</td><td>1 × ?</td><td>100 lbs</td></tr>
-          <tr><td>Leg Press</td><td>1 × ?</td><td>115 lbs</td></tr>
-          <tr><td>Leg Press</td><td>1 × ?</td><td>135 lbs</td></tr>
-          <tr><td>Leg Press</td><td>1 × 3</td><td>200 lbs (near fail)</td></tr>
-          <tr><td>Barbell Back Squat</td><td>1 × ?</td><td>135 lbs (1 plate/side)</td></tr>
-        </tbody>
-      </table>
-      <div class="log-note"><strong>Coach note:</strong> Showed up and pushed the leg press to 200 — good effort. Next session: RDLs need to hit 135+ for working sets, and squats need 3+ working sets. Volume is key for leg growth.</div>
-    </div>
-
-  </div><!-- end week card -->
-</div><!-- end log section -->
-
-</div><!-- end main -->
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <script>
-function showSection(id) {
+// ============ WORKOUT DATA ============
+const WORKOUTS = {
+  push: {
+    name: 'Push Day',
+    focus: 'Chest, Shoulders, Triceps',
+    color: 'var(--accent)',
+    exercises: [
+      { name: 'Barbell Bench Press', sets: 4, reps: '6-8' },
+      { name: 'Incline Dumbbell Press', sets: 3, reps: '8-10' },
+      { name: 'Cable Flyes', sets: 3, reps: '12-15' },
+      { name: 'Overhead Press', sets: 4, reps: '6-8' },
+      { name: 'Lateral Raises', sets: 4, reps: '12-15' },
+      { name: 'Tricep Pushdowns', sets: 3, reps: '10-12' },
+      { name: 'Overhead Tricep Extension', sets: 3, reps: '10-12' }
+    ]
+  },
+  pull: {
+    name: 'Pull Day',
+    focus: 'Back, Biceps, Rear Delts',
+    color: 'var(--blue)',
+    exercises: [
+      { name: 'Barbell Rows', sets: 4, reps: '6-8' },
+      { name: 'Lat Pulldowns', sets: 3, reps: '8-10' },
+      { name: 'Seated Cable Rows', sets: 3, reps: '10-12' },
+      { name: 'Face Pulls', sets: 4, reps: '15-20' },
+      { name: 'Barbell Curls', sets: 3, reps: '8-10' },
+      { name: 'Hammer Curls', sets: 3, reps: '10-12' },
+      { name: 'Rear Delt Flyes', sets: 3, reps: '12-15' }
+    ]
+  },
+  legs_swim: {
+    name: 'Legs + Swim',
+    focus: 'Quads, Glutes, Hamstrings + Cardio',
+    color: 'var(--cyan)',
+    exercises: [
+      { name: 'Barbell Squats', sets: 4, reps: '6-8' },
+      { name: 'Romanian Deadlifts', sets: 3, reps: '8-10' },
+      { name: 'Leg Press', sets: 3, reps: '10-12' },
+      { name: 'Walking Lunges', sets: 3, reps: '12 each leg' },
+      { name: 'Leg Curls', sets: 3, reps: '10-12' },
+      { name: 'Calf Raises', sets: 4, reps: '15-20' }
+    ]
+  },
+  upper: {
+    name: 'Upper Power',
+    focus: 'Chest, Back, Arms — Heavy',
+    color: 'var(--orange)',
+    exercises: [
+      { name: 'Incline Barbell Bench', sets: 4, reps: '5-7' },
+      { name: 'Weighted Pull-Ups', sets: 4, reps: '5-8' },
+      { name: 'Dumbbell Shoulder Press', sets: 3, reps: '8-10' },
+      { name: 'T-Bar Rows', sets: 3, reps: '8-10' },
+      { name: 'Dips (Weighted)', sets: 3, reps: '8-10' },
+      { name: 'Preacher Curls', sets: 3, reps: '10-12' },
+      { name: 'Skull Crushers', sets: 3, reps: '10-12' }
+    ]
+  },
+  legs_heavy: {
+    name: 'Legs Heavy',
+    focus: 'Glutes, Hamstrings, Quads — Max Effort',
+    color: 'var(--red)',
+    exercises: [
+      { name: 'Deadlifts', sets: 4, reps: '4-6' },
+      { name: 'Front Squats', sets: 3, reps: '6-8' },
+      { name: 'Hip Thrusts', sets: 4, reps: '8-10' },
+      { name: 'Bulgarian Split Squats', sets: 3, reps: '10 each' },
+      { name: 'Leg Extensions', sets: 3, reps: '12-15' },
+      { name: 'Standing Calf Raises', sets: 4, reps: '12-15' }
+    ]
+  },
+  recovery: {
+    name: 'Active Recovery',
+    focus: 'Light Swim, Stretching, Mobility',
+    color: 'var(--purple)',
+    exercises: [
+      { name: '20 min Light Swim or Walk', sets: 1, reps: '20 min' },
+      { name: 'Foam Rolling — Full Body', sets: 1, reps: '10 min' },
+      { name: 'Hip Flexor Stretch', sets: 2, reps: '60s each' },
+      { name: 'Shoulder Dislocates', sets: 2, reps: '15' },
+      { name: 'Cat-Cow Stretches', sets: 2, reps: '10' }
+    ]
+  },
+  rest: {
+    name: 'Full Rest',
+    focus: 'Eat Big, Sleep Well, Recover',
+    color: 'var(--text-dim)',
+    exercises: []
+  }
+};
+
+// Sunday=0: Push, Mon: Pull, Tue: Legs+Swim, Wed: Upper, Thu: Legs Heavy, Fri: Recovery, Sat: Rest
+const DAY_MAP = { 0:'push', 1:'pull', 2:'legs_swim', 3:'upper', 4:'legs_heavy', 5:'recovery', 6:'rest' };
+const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+// ============ LOCAL STORAGE HELPERS ============
+function getStore(key, fallback) {
+  try { const d = localStorage.getItem(key); return d ? JSON.parse(d) : fallback; }
+  catch { return fallback; }
+}
+function setStore(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+
+// ============ TOAST ============
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ============ TAB NAVIGATION ============
+function showTab(tab) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  event.currentTarget.classList.add('active');
-  window.scrollTo({ top: document.querySelector('.nav').offsetTop, behavior: 'smooth' });
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.textContent.trim().toLowerCase() === tab ||
+        (tab === 'body' && b.textContent.trim() === 'Build') ||
+        (tab === 'prs' && b.textContent.trim() === 'PRs')) {
+      b.classList.add('active');
+    }
+  });
+  // Refresh data views
+  if (tab === 'weight') renderWeight();
+  if (tab === 'prs') renderPRs();
+  if (tab === 'log') renderLog();
 }
-function toggleDay(card) {
-  if (card.querySelector('.day-body')) card.classList.toggle('open');
+
+// ============ TODAY — RENDER ============
+function renderToday() {
+  const dow = new Date().getDay();
+  const key = DAY_MAP[dow];
+  const w = WORKOUTS[key];
+  const now = new Date();
+
+  document.getElementById('todayDayName').textContent = w.name;
+  document.getElementById('todayDayName').style.color = w.color;
+  document.getElementById('todayFocus').textContent = w.focus;
+  document.getElementById('todayDate').textContent = now.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+
+  const container = document.getElementById('todayExercises');
+  if (key === 'rest') {
+    container.innerHTML = '<div class="card" style="text-align:center;padding:40px 20px"><div style="font-size:32px;margin-bottom:12px">Rest Day</div><div style="color:var(--text-dim)">Eat big. Sleep 8+ hours. Recover. Come back stronger tomorrow.</div></div>';
+    return;
+  }
+  if (key === 'recovery') {
+    container.innerHTML = w.exercises.map((ex, i) => `
+      <div class="exercise-card">
+        <div class="exercise-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="exercise-name">${ex.name}</span>
+          <span class="exercise-rx">${ex.sets} x ${ex.reps}</span>
+        </div>
+      </div>`).join('');
+    return;
+  }
+
+  // Load any saved data for today
+  const todayKey = now.toISOString().split('T')[0];
+  const logs = getStore('workoutLogs', {});
+  const todayLog = logs[todayKey] || {};
+
+  container.innerHTML = w.exercises.map((ex, ei) => {
+    const savedSets = todayLog[ex.name] || [];
+    let setsHTML = '';
+    for (let s = 0; s < ex.sets; s++) {
+      const saved = savedSets[s] || {};
+      const done = saved.done || false;
+      setsHTML += `
+        <div class="set-row">
+          <div class="set-label">S${s+1}</div>
+          <input class="set-input" type="number" inputmode="decimal" placeholder="lbs"
+            id="w_${ei}_${s}" value="${saved.weight || ''}" step="2.5">
+          <input class="set-input" type="number" inputmode="numeric" placeholder="reps"
+            id="r_${ei}_${s}" value="${saved.reps || ''}">
+          <button class="set-check ${done ? 'done' : ''}" onclick="toggleSet(this)" id="c_${ei}_${s}">
+            ${done ? '&#10003;' : ''}
+          </button>
+        </div>`;
+    }
+    return `
+      <div class="exercise-card open">
+        <div class="exercise-header" onclick="this.parentElement.classList.toggle('open')">
+          <span class="exercise-name">${ex.name}</span>
+          <span class="exercise-rx">${ex.sets} x ${ex.reps}</span>
+        </div>
+        <div class="exercise-sets">${setsHTML}</div>
+      </div>`;
+  }).join('');
 }
-function toggleCheck(li) {
-  li.classList.toggle('checked');
-  li.querySelector('.check-box').textContent = li.classList.contains('checked') ? '\u2713' : '';
+
+function toggleSet(btn) {
+  btn.classList.toggle('done');
+  btn.innerHTML = btn.classList.contains('done') ? '&#10003;' : '';
 }
-function toggleGrocery(item) {
-  item.classList.toggle('bought');
-  item.querySelector('.grocery-check').textContent = item.classList.contains('bought') ? '\u2713' : '';
+
+// ============ SAVE TODAY ============
+function saveTodayWorkout() {
+  const dow = new Date().getDay();
+  const key = DAY_MAP[dow];
+  const w = WORKOUTS[key];
+  if (!w.exercises.length) return toast('Nothing to save on rest day!');
+
+  const todayKey = new Date().toISOString().split('T')[0];
+  const logs = getStore('workoutLogs', {});
+  const todayLog = {};
+  const prs = getStore('personalRecords', {});
+  let newPR = false;
+
+  w.exercises.forEach((ex, ei) => {
+    const sets = [];
+    for (let s = 0; s < ex.sets; s++) {
+      const weight = parseFloat(document.getElementById(`w_${ei}_${s}`).value) || 0;
+      const reps = parseInt(document.getElementById(`r_${ei}_${s}`).value) || 0;
+      const done = document.getElementById(`c_${ei}_${s}`).classList.contains('done');
+      sets.push({ weight, reps, done });
+
+      // Check for PR (heaviest weight with at least 1 rep)
+      if (weight > 0 && reps > 0) {
+        const currentPR = prs[ex.name] || { weight: 0, reps: 0 };
+        if (weight > currentPR.weight || (weight === currentPR.weight && reps > currentPR.reps)) {
+          prs[ex.name] = { weight, reps, date: todayKey };
+          newPR = true;
+        }
+      }
+    }
+    todayLog[ex.name] = sets;
+  });
+
+  logs[todayKey] = todayLog;
+  logs[todayKey]._meta = { day: key, name: w.name };
+  setStore('workoutLogs', logs);
+  setStore('personalRecords', prs);
+
+  toast(newPR ? 'Saved! NEW PR!' : 'Workout saved!');
 }
+
+// ============ WEIGHT TRACKING ============
+function logWeight() {
+  const val = parseFloat(document.getElementById('weightInput').value);
+  if (!val || val < 50 || val > 400) return toast('Enter a valid weight');
+  const history = getStore('weightHistory', []);
+  const today = new Date().toISOString().split('T')[0];
+  // Replace if already logged today
+  const idx = history.findIndex(e => e.date === today);
+  if (idx >= 0) history[idx].weight = val;
+  else history.push({ date: today, weight: val });
+  history.sort((a,b) => a.date.localeCompare(b.date));
+  setStore('weightHistory', history);
+  document.getElementById('weightInput').value = '';
+  renderWeight();
+  toast('Weight logged: ' + val + ' lbs');
+}
+
+function renderWeight() {
+  const history = getStore('weightHistory', []);
+  const start = 140, goal = 170;
+  const current = history.length ? history[history.length - 1].weight : start;
+  const gained = Math.max(0, current - start);
+  const left = Math.max(0, goal - current);
+  const pct = Math.min(100, Math.max(0, ((current - start) / (goal - start)) * 100));
+
+  document.getElementById('wCurrent').textContent = current;
+  document.getElementById('wGained').textContent = '+' + gained.toFixed(1);
+  document.getElementById('wLeft').textContent = left.toFixed(1);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct.toFixed(0) + '% to 170 lbs';
+
+  // Render log list
+  const list = document.getElementById('weightLogList');
+  if (!history.length) {
+    list.innerHTML = '<p style="color:var(--text-dim);font-size:13px;padding:8px 0">No weigh-ins yet. Step on the scale!</p>';
+  } else {
+    list.innerHTML = history.slice().reverse().slice(0, 20).map(e =>
+      `<div class="weight-log-item"><span class="date">${formatDate(e.date)}</span><span style="font-weight:700">${e.weight} lbs</span></div>`
+    ).join('');
+  }
+
+  // Draw chart
+  drawWeightChart(history);
+}
+
+function drawWeightChart(history) {
+  const canvas = document.getElementById('weightChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = rect.height;
+
+  ctx.clearRect(0, 0, W, H);
+
+  if (history.length < 2) {
+    ctx.fillStyle = '#444';
+    ctx.font = '13px Inter';
+    ctx.textAlign = 'center';
+    ctx.fillText('Log at least 2 weigh-ins to see chart', W/2, H/2);
+    return;
+  }
+
+  const weights = history.map(e => e.weight);
+  const minW = Math.min(...weights, 135);
+  const maxW = Math.max(...weights, 175);
+  const pad = { top: 20, bottom: 30, left: 10, right: 10 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top - pad.bottom;
+
+  // Goal line
+  const goalY = pad.top + cH - ((170 - minW) / (maxW - minW)) * cH;
+  ctx.strokeStyle = 'rgba(74,222,128,0.3)';
+  ctx.setLineDash([5, 5]);
+  ctx.beginPath();
+  ctx.moveTo(pad.left, goalY);
+  ctx.lineTo(W - pad.right, goalY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = 'rgba(74,222,128,0.5)';
+  ctx.font = '10px Inter';
+  ctx.textAlign = 'right';
+  ctx.fillText('170 goal', W - pad.right, goalY - 4);
+
+  // Line
+  ctx.strokeStyle = '#4ade80';
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  history.forEach((e, i) => {
+    const x = pad.left + (i / (history.length - 1)) * cW;
+    const y = pad.top + cH - ((e.weight - minW) / (maxW - minW)) * cH;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Gradient fill
+  const last = history.length - 1;
+  const gradient = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
+  gradient.addColorStop(0, 'rgba(74,222,128,0.25)');
+  gradient.addColorStop(1, 'rgba(74,222,128,0)');
+  ctx.fillStyle = gradient;
+  ctx.lineTo(pad.left + cW, H - pad.bottom);
+  ctx.lineTo(pad.left, H - pad.bottom);
+  ctx.closePath();
+  ctx.fill();
+
+  // Dots
+  history.forEach((e, i) => {
+    const x = pad.left + (i / (history.length - 1)) * cW;
+    const y = pad.top + cH - ((e.weight - minW) / (maxW - minW)) * cH;
+    ctx.fillStyle = '#4ade80';
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fill();
+  });
+}
+
+// ============ PERSONAL RECORDS ============
+function renderPRs() {
+  const prs = getStore('personalRecords', {});
+  const list = document.getElementById('prList');
+  const entries = Object.entries(prs);
+  if (!entries.length) {
+    list.innerHTML = '<p style="color:var(--text-dim);font-size:13px">Log workouts to track your PRs automatically.</p>';
+    return;
+  }
+  // Sort by weight descending
+  entries.sort((a, b) => b[1].weight - a[1].weight);
+  list.innerHTML = entries.map(([name, pr]) => {
+    const isRecent = pr.date && daysSince(pr.date) < 7;
+    return `<div class="pr-card">
+      <div>
+        <div class="pr-name">${name}${isRecent ? '<span class="pr-badge">New!</span>' : ''}</div>
+        <div class="pr-details">${pr.reps} reps @ ${pr.weight} lbs${pr.date ? ' — ' + formatDate(pr.date) : ''}</div>
+      </div>
+      <div class="pr-val">${pr.weight}<span style="font-size:12px;color:var(--text-dim)"> lbs</span></div>
+    </div>`;
+  }).join('');
+}
+
+// ============ WORKOUT LOG HISTORY ============
+function renderLog() {
+  const logs = getStore('workoutLogs', {});
+  const list = document.getElementById('logList');
+  const dates = Object.keys(logs).sort().reverse();
+  if (!dates.length) {
+    list.innerHTML = '<p style="color:var(--text-dim);font-size:13px">No workouts logged yet. Hit the gym!</p>';
+    return;
+  }
+  list.innerHTML = dates.slice(0, 30).map(date => {
+    const log = logs[date];
+    const meta = log._meta || {};
+    const exercises = Object.entries(log).filter(([k]) => k !== '_meta');
+    let summary = exercises.map(([name, sets]) => {
+      const best = sets.reduce((max, s) => s.weight > max.weight ? s : max, { weight: 0, reps: 0 });
+      return best.weight > 0 ? `${name}: ${best.weight}lbs x ${best.reps}` : null;
+    }).filter(Boolean).join(' | ');
+    return `<div class="history-entry">
+      <div class="he-date">${formatDate(date)}</div>
+      <div class="he-title">${meta.name || 'Workout'}</div>
+      <div class="he-detail">${summary || 'No sets recorded'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ============ AI COACH ============
+function runCoach() {
+  const logs = getStore('workoutLogs', {});
+  const weightHist = getStore('weightHistory', []);
+  const prs = getStore('personalRecords', {});
+  const output = document.getElementById('coachOutput');
+
+  const dates = Object.keys(logs).sort();
+  if (dates.length < 2) {
+    output.innerHTML = '<strong>Not enough data yet.</strong>\n\nLog at least 2-3 workouts so I can analyze your training. Get in the gym today and start tracking!';
+    return;
+  }
+
+  let feedback = [];
+
+  // 1. Consistency check
+  const recentDates = dates.filter(d => daysSince(d) <= 14);
+  const workoutsLast14 = recentDates.length;
+  if (workoutsLast14 >= 8) {
+    feedback.push('<strong>Consistency: CRUSHING IT</strong>\n' + workoutsLast14 + ' workouts in the last 2 weeks. This is how you get to 170.');
+  } else if (workoutsLast14 >= 5) {
+    feedback.push('<strong>Consistency: Good</strong>\n' + workoutsLast14 + ' workouts in 2 weeks. Solid, but push for 5 days/week minimum.');
+  } else {
+    feedback.push('<strong>Consistency: NEEDS WORK</strong>\nOnly ' + workoutsLast14 + ' workouts in 2 weeks. You want 170 lbs? You need 5 sessions/week minimum. No excuses.');
+  }
+
+  // 2. Progressive overload check
+  const exerciseHistory = {};
+  dates.forEach(date => {
+    const log = logs[date];
+    Object.entries(log).forEach(([name, sets]) => {
+      if (name === '_meta') return;
+      if (!exerciseHistory[name]) exerciseHistory[name] = [];
+      const best = (sets || []).reduce((max, s) => s.weight > max.weight ? s : max, { weight: 0, reps: 0 });
+      if (best.weight > 0) exerciseHistory[name].push({ date, weight: best.weight, reps: best.reps });
+    });
+  });
+
+  const stalled = [];
+  const progressing = [];
+  Object.entries(exerciseHistory).forEach(([name, entries]) => {
+    if (entries.length < 2) return;
+    const recent = entries.slice(-3);
+    const weights = recent.map(e => e.weight);
+    if (weights.length >= 2 && weights[weights.length - 1] <= weights[0]) {
+      stalled.push(name);
+    } else if (weights.length >= 2 && weights[weights.length - 1] > weights[0]) {
+      progressing.push(name);
+    }
+  });
+
+  if (progressing.length) {
+    feedback.push('<strong>Progressing (weight going UP):</strong>\n' + progressing.join(', ') + '\nKeep pushing. Add 5 lbs when you hit the top of your rep range.');
+  }
+  if (stalled.length) {
+    feedback.push('<strong>Stalled (same or lower weight):</strong>\n' + stalled.join(', ') + '\nTry: drop sets, add a set, or deload for a week then come back heavier.');
+  }
+
+  // 3. Weight trend
+  if (weightHist.length >= 2) {
+    const first = weightHist[0].weight;
+    const last = weightHist[weightHist.length - 1].weight;
+    const diff = last - first;
+    const weeks = Math.max(1, daysSince(weightHist[0].date) / 7);
+    const rate = diff / weeks;
+
+    if (rate >= 0.4 && rate <= 0.9) {
+      feedback.push('<strong>Weight Gain: Perfect Pace</strong>\nGaining ~' + rate.toFixed(1) + ' lbs/week. This is the sweet spot for lean muscle.');
+    } else if (rate > 0.9) {
+      feedback.push('<strong>Weight Gain: A Bit Fast</strong>\nGaining ~' + rate.toFixed(1) + ' lbs/week. Might be adding extra fat. Consider reducing calories by 200.');
+    } else if (rate > 0) {
+      feedback.push('<strong>Weight Gain: Too Slow</strong>\nOnly ~' + rate.toFixed(1) + ' lbs/week. EAT MORE. Add another meal or bigger shakes. You need 3,800+ calories.');
+    } else {
+      feedback.push('<strong>Weight Gain: LOSING WEIGHT</strong>\nYou are going in the wrong direction. You MUST eat more. Add 500 calories immediately.');
+    }
+  } else {
+    feedback.push('<strong>Weight Tracking:</strong>\nStart logging your weight daily so I can track your bulk progress!');
+  }
+
+  // 4. Top lifts
+  const prEntries = Object.entries(prs).sort((a,b) => b[1].weight - a[1].weight).slice(0, 5);
+  if (prEntries.length) {
+    feedback.push('<strong>Your Top Lifts:</strong>\n' + prEntries.map(([n, p]) => n + ': ' + p.weight + 'lbs x ' + p.reps).join('\n'));
+  }
+
+  // 5. Motivation
+  const motivations = [
+    "You didn't come this far to only come this far. 170 is waiting.",
+    "Every set you log is a brick in the wall. Keep building.",
+    "140 to 170 is 30 lbs of pure transformation. You've got this.",
+    "The gym doesn't care about your excuses. Show up and lift.",
+    "Your future self will thank you for every rep you're logging today."
+  ];
+  feedback.push('\n' + motivations[Math.floor(Math.random() * motivations.length)]);
+
+  output.innerHTML = feedback.join('\n\n');
+}
+
+// ============ SPLIT VIEW ============
+function renderSplit() {
+  const container = document.getElementById('splitView');
+  const order = ['push','pull','legs_swim','upper','legs_heavy','recovery','rest'];
+  const dayLabels = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  container.innerHTML = order.map((key, i) => {
+    const w = WORKOUTS[key];
+    const exHTML = w.exercises.map(ex =>
+      `<div class="split-exercise"><span>${ex.name}</span><span class="rx">${ex.sets} x ${ex.reps}</span></div>`
+    ).join('');
+    return `<div class="split-day" onclick="this.classList.toggle('open')">
+      <div class="split-day-header">
+        <span><span style="color:${w.color};font-weight:800">${dayLabels[i]}</span> — ${w.name}</span>
+        <span class="arrow">&#9662;</span>
+      </div>
+      <div class="split-day-body">${exHTML || '<p style="color:var(--text-dim);padding:8px 0">Full rest. Recover and eat.</p>'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ============ GROCERY LIST ============
+function renderGrocery() {
+  const groceries = {
+    'Protein': ['5 lbs chicken thighs','3 lbs ground beef (80/20)','2 lbs steak','1 lb salmon','2 dozen eggs','2 lbs cottage cheese','Greek yogurt (whole milk, 32oz)','Whey protein (5 lb tub)','Casein protein'],
+    'Carbs': ['White rice (5 lb bag)','Sweet potatoes (3 lbs)','Sourdough bread','White bread','Pasta (2 boxes)','Oats (large canister)','Bananas (bunch of 7)','Dinner rolls'],
+    'Fats & Extras': ['Peanut butter (natural, 2 jars)','Olive oil','Butter','Whole milk (1 gallon)','Trail mix','Almonds (1 lb bag)','Jelly/jam'],
+    'Produce': ['Broccoli (2 heads)','Mixed greens/salad','Avocados (4)'],
+    'Supplements': ['Creatine monohydrate (if low)','Multivitamin','Fish oil']
+  };
+
+  const checked = getStore('groceryChecked', {});
+  const container = document.getElementById('groceryListContainer');
+  container.innerHTML = Object.entries(groceries).map(([cat, items]) =>
+    `<div class="grocery-cat"><h3>${cat}</h3>${items.map((item, i) => {
+      const id = cat + '_' + i;
+      const isChecked = checked[id] || false;
+      return `<div class="grocery-item ${isChecked ? 'checked-item' : ''}" onclick="toggleGrocery('${id}', this)">
+        <div class="grocery-check ${isChecked ? 'checked' : ''}" id="gc_${id}">${isChecked ? '&#10003;' : ''}</div>
+        <span>${item}</span>
+      </div>`;
+    }).join('')}</div>`
+  ).join('');
+}
+
+function toggleGrocery(id, row) {
+  const checked = getStore('groceryChecked', {});
+  checked[id] = !checked[id];
+  setStore('groceryChecked', checked);
+  const el = document.getElementById('gc_' + id);
+  el.classList.toggle('checked');
+  el.innerHTML = el.classList.contains('checked') ? '&#10003;' : '';
+  row.classList.toggle('checked-item');
+}
+
+// ============ UTILITIES ============
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function daysSince(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  const now = new Date();
+  return Math.floor((now - d) / 86400000);
+}
+
+// ============ INIT ============
+renderToday();
+renderSplit();
+renderGrocery();
+renderWeight();
 </script>
 </body>
 </html>
